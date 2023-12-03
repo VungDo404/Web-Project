@@ -70,8 +70,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="Experience">Work experience</label>
-                <input class="form-control" type="text" placeholder="Experience" id="Experience">
+                <label>Work experience</label>
+                <input class="form-control" type="text" id="Experience">
             </div>
             <fieldset class="form-group">
                 <div class="row" id="Gender">
@@ -211,11 +211,10 @@
             $('#Name').val(e.data.record.Name);
             $('#Age').val(e.data.record.Age);
             $('#Email').val(e.data.record.Email);
-            $('#Description').val(e.data.record.Description);
+            $('#About').val(e.data.record.About);
             $('#Skills').val(e.data.record.Skills);
             $('#Experience').val(e.data.record.Experience);
             $('#Address').val(e.data.record.Address);
-            /// Gọi php để nạp data vào phones với certificates dựa vào ID của resume là e.data.record.ID và render data vào phone-body và certificate-body (xem HTML phía trên) chỉ render các trường có valid === true
             // $.ajax()
             $.ajax({
                 url: 'load_phone.php',

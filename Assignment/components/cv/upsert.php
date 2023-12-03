@@ -49,8 +49,9 @@
         }
         
     }else {
+        echo $experience;
         $sql = "UPDATE resumes 
-            SET name='$name', age='$age', gender='$gender', address='$address', email='$email', description='$description', skills='$skills', experience='$experience' 
+            SET name='$name', age=$age, gender='$gender', address='$address', email='$email', description='$description', skills='$skills', experience='$experience' 
             WHERE user_id=$user_id AND resume_id = $resume_id" ;
         mysqli_query($conn, $sql);
         ////

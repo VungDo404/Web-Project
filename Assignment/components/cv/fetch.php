@@ -26,7 +26,7 @@
             'Gender' => $row['gender'],
             'Address' => $row['address'],
             'Email' => $row['email'],
-            'Description' => $row['description'],
+            'About' => $row['description'],
             'Skills' => $row['skills'],
             'Experience' => $row['experience'],
             'CreatedDate' => $row['reg_date'],
