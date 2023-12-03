@@ -12,12 +12,15 @@
 <style>
     #dialog{
         width: 60vw !important;
+        max-height: 100%;
+        overflow: auto;
     }
 </style>
 <body>
     <?php
-        if(!isset($_COOKIE["user_id"]))
-            header("Location: http://localhost/login_page.php");
+        if(!isset($_COOKIE["user_id"])){
+            header("Location: http://localhost/Assignment/components/login/login_page.php");
+        }
     ?>
     <div class="container-fluid">
         <div class="row">
@@ -56,6 +59,20 @@
                 <label for="Email">Email</label>
                 <input class="form-control" type="text" placeholder="user@example.com" id="Email">
             </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input class="form-control" type="text" id="Address">
+            </div>
+            <div class="mb-3">
+                <div class="form-group">
+                    <label>Your skills</label>
+                    <textarea id='Skills' class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Experience">Work experience</label>
+                <input class="form-control" type="text" placeholder="Experience" id="Experience">
+            </div>
             <fieldset class="form-group">
                 <div class="row" id="Gender">
                 <legend class="col-form-label col-sm-2 pt-0 mr-1">Gender</legend>
@@ -92,7 +109,7 @@
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
             <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
         </form>
-        <div class="modal fade" id="modal-phone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="modal-phone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                 <section style="background-color: #eee;">
@@ -104,16 +121,15 @@
 
                                 <h4 class="text-center my-3 pb-3">Phone number</h4>
 
-                                <form action="add_phone.php" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
                                 <div class="col-12">
                                     <div class="form-outline">
-                                    <input type="text" id="form1" class="form-control" />
-                                    <label class="form-label" for="form1">Enter your phone number here</label>
+                                    <input type="text" id="form1" class="form-control my-3" placeholder='Enter your phone number here'/>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-primary" id='save1'>Save</button>
                                 </div>
                                 </form>
 
@@ -125,12 +141,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id='phone-body'>
-                                    <tr>
-                                        <td>In progress</td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
                                 </tbody>
                                 </table>
 
@@ -152,19 +162,17 @@
                         <div class="col">
                             <div class="card rounded-3">
                             <div class="card-body p-4">
-
                                 <h4 class="text-center my-3 pb-3">Certificate</h4>
-
-                                <form action="add_certificate.php" class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
                                 <div class="col-12">
                                     <div class="form-outline">
-                                    <input type="text" id="form1" class="form-control" />
-                                    <label class="form-label" for="form1">Enter your certificates here</label>
+                                    <input type="text" id="form2" class="form-control" placeholder="Name of the certificate" />
+                                    <textarea id='Cert' class="form-control my-3" placeholder="About the certificate"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button class="btn btn-primary" id='save2'>Save</button>
                                 </div>
                                 </form>
 
@@ -176,12 +184,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id='certificate-body'>
-                                    <tr>
-                                        <td>In progress</td>
-                                        <td>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
                                 </tbody>
                                 </table>
                             </div>
@@ -200,50 +202,122 @@
 
     <script type="text/javascript">
         let grid, dialog;
-        let phones = [{valid:true,number:'123'}]; 
-        let certificates = [{valid:true,number:'something'}];
+        // let phones = [{valid:true,number:'123', id:''}]; 
+        // let certificates = [{valid:true,description:'something', name:'', id:''}];
+        let phones = []; 
+        let certificates = [];
         function Edit(e) {
             $('#ID').val(e.data.record.ID);
             $('#Name').val(e.data.record.Name);
             $('#Age').val(e.data.record.Age);
             $('#Email').val(e.data.record.Email);
+            $('#Description').val(e.data.record.Description);
+            $('#Skills').val(e.data.record.Skills);
+            $('#Experience').val(e.data.record.Experience);
+            $('#Address').val(e.data.record.Address);
             /// Gọi php để nạp data vào phones với certificates dựa vào ID của resume là e.data.record.ID và render data vào phone-body và certificate-body (xem HTML phía trên) chỉ render các trường có valid === true
             // $.ajax()
+            $.ajax({
+                url: 'load_phone.php',
+                method: 'POST',
+                data: { resume_id: e.data.record.ID },
+                success: function (response) {
+                    phones = JSON.parse(response);
+                    renderPhones();
+                }
+            });
+
+            $.ajax({
+                url: 'load_certificate.php',
+                method: 'POST',
+                data: { resume_id: e.data.record.ID },
+                success: function (response) {
+                    certificates = JSON.parse(response);
+                    console.log(certificates)
+                    renderCertificates();
+                }
+            });
             dialog.open();
         }
         function Save() {
-            var record = {
+            let record = {
                 ID: $('#ID').val(),
                 Name: $('#Name').val(),
                 Gender: $('#Gender input:radio:checked').val(),
                 Age: $('#Age').val(),
                 Email: $('#Email').val(),
-                Description: $('#About').val()
+                Description: $('#About').val(),
+                Skills: $('#Skills').val(),
+                Experience: $('#Experience').val(),
+                Address: $('#Address').val(),
             };
             record.phones = phones; 
             record.certificates = certificates; 
             console.log(record)
-            // $.ajax({ url: 'create.php', data: { record: record }, method: 'POST' })
-            //     .done(function () {
-            //         dialog.close();
-            //         grid.reload();
-            //     })
-            //     .fail(function () {
-            //         alert('Failed to save.');
-            //         dialog.close();
-            //     });
+            $.ajax({ url: 'upsert.php', data: { record: record }, method: 'POST' })
+                .done(function (response) {
+                    // console.log(JSON.parse(response));
+                    console.log(response);
+                    dialog.close();
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to save.');
+                    dialog.close();
+                });
         }
         function Delete(e) {
             if (confirm('Are you sure?')) {
-                console.log(e.data)
-                // $.ajax({ url: 'delete.php', data: { id: e.data.ID }, method: 'POST' })
-                //     .done(function () {
-                //         grid.reload();
-                //     })
-                //     .fail(function () {
-                //         alert('Failed to delete.');
-                //     });
+                console.log(e.data.id)
+                $.ajax({ url: 'delete.php', data: { id: e.data.id }, method: 'POST' })
+                    .done(function (res) {
+                        grid.reload();
+                    })
+                    .fail(function () {
+                        alert('Failed to delete.');
+                    });
             }
+        }
+        function DeletePhone(index) {
+            phones[index].valid = false;
+            renderPhones();
+        }
+
+        function DeleteCertificate(index) {
+            certificates[index].valid = false;
+            renderCertificates();
+        }
+        function renderPhones() {
+            $('#form1').val('');
+            let html = ''; 
+            phones.forEach(function (phone, index) {
+                if (phone.valid) {
+                    html += `<tr><td>${phone.number}</td><td><button type="button" class="btn btn-danger" onclick="DeletePhone(${index})">Delete</button></td></tr>`;
+                }
+            });
+            $('#phone-body').html(html);
+        }
+
+        function renderCertificates() {
+            $('#form2').val('');
+            $('#Cert').val('');
+            let html = '';
+            certificates.forEach(function (certificate, index) {
+                if (certificate.valid) {
+                    html += `<tr><td>${certificate.name}</td><td><button type="button" class="btn btn-danger" onclick="DeleteCertificate(${index})">Delete</button></td></tr>`;
+                }
+            });
+            $('#certificate-body').html(html);
+        }
+        function DeletePhone(index) {
+            phones[index].valid = false;
+            console.log(phones)
+            renderPhones();
+        }
+
+        function DeleteCertificate(index) {
+            certificates[index].valid = false;
+            renderCertificates();
         }
         $(document).ready(function () {
             grid = $('#grid').grid({
@@ -257,7 +331,7 @@
                     { title: '', field: 'Edit', width: 42, type: 'icon', icon: 'fa fa-pencil', tooltip: 'Edit', events: { 'click': Edit } },
                     { title: '', field: 'Delete', width: 42, type: 'icon', icon: 'fa fa-remove', tooltip: 'Delete', events: { 'click': Delete } }
                 ],
-                pager: { limit: 5, sizes: [2, 5, 10, 20] }
+                pager: { limit: 2, sizes: [2, 5, 10, 100] }
             });
             dialog = $('#dialog').dialog({
                 uiLibrary: 'bootstrap4',
@@ -271,6 +345,9 @@
                 $('#Age').val('');
                 $('#Email').val('');
                 $('#About').val('');
+                $('#Skills').val('');
+                $('#Experience').val('');
+                $('#Address').val('');
                 dialog.open('Add Resume');
             });
             $('#btnSave').on('click', Save);
@@ -286,8 +363,22 @@
                 $('#txtName').val('');
                 grid.reload({ name: '', Age: '', Email:'',  });
             });
-
-            // Catch event delete của delete certificate và delete phone, viết 2 hàm riêng, thay đổi giá trị của valid === false trong array phones và certificates (chỉ làm trong phạm vi JS)
+            $('#save1').on('click', function (e) {
+                e.preventDefault(); 
+                const phone = $('#form1').val();
+                phones.push({valid:true,number:phone, id:''});
+                console.log(phones)
+                renderPhones();
+                // console.log(phones)
+            });
+            $('#save2').on('click', function (e) {
+                e.preventDefault();
+                const desc = $('#Cert').val();
+                const name = $('#form2').val();
+                certificates.push({valid:true,description:desc, name:name, id:''});
+                renderCertificates();
+            });
+            
         });
     </script>
 
@@ -295,19 +386,3 @@
 </html>
 
 
-
-<?php  
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $databasename = 'MyResume';
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $databasename);
-    
-    $email =  isset($_POST["email"]) ? $_POST["email"] : '';
-    $password = isset($_POST["password"]) ? $_POST["password"] : '';
-
-    
-    mysqli_close($conn);
-?>
