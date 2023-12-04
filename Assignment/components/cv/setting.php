@@ -46,32 +46,32 @@
 
     <div id="dialog" style="display: none">
         <input type="hidden" id="ID" />
-        <form class="col-sm-12">
+        <form class="col-sm-12" id='form-cv'>
             <div class="form-group">
                 <label for="Name">Name</label>
-                <input type="text" class="form-control" id="Name">
+                <input type="text" class="form-control" id="Name" minlength='2' name="Name" required>
             </div>
             <div class="form-group">
                 <label for="Age">Age</label>
-                <input type="text" class="form-control" id="Age">
+                <input type="text" class="form-control" id="Age" name="Age" required>
             </div>
             <div class="form-group">
                 <label for="Email">Email</label>
-                <input class="form-control" type="text" placeholder="user@example.com" id="Email">
+                <input class="form-control" type="text" placeholder="user@example.com" id="Email" name="Email" required>
             </div>
             <div class="form-group">
                 <label for="Address">Address</label>
-                <input class="form-control" type="text" id="Address">
+                <input class="form-control" type="text" id="Address" name="Address" required>
             </div>
             <div class="mb-3">
                 <div class="form-group">
                     <label>Your skills</label>
-                    <textarea id='Skills' class="form-control"></textarea>
+                    <textarea id='Skills' class="form-control" name="Skills" required></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label>Work experience</label>
-                <input class="form-control" type="text" id="Experience">
+                <input class="form-control" type="text" id="Experience" name="Experience" required>
             </div>
             <fieldset class="form-group">
                 <div class="row" id="Gender">
@@ -103,7 +103,7 @@
             <div class="mb-3">
                 <div class="form-group">
                     <label>About</label>
-                    <textarea id='About' class="form-control" rows="5" placeholder="My Bio"></textarea>
+                    <textarea id='About' class="form-control" rows="5" placeholder="My Bio" name="About" required></textarea>
                 </div>
             </div>
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
@@ -121,10 +121,10 @@
 
                                 <h4 class="text-center my-3 pb-3">Phone number</h4>
 
-                                <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
+                                <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" id='phone-form' >
                                 <div class="col-12">
                                     <div class="form-outline">
-                                    <input type="text" id="form1" class="form-control my-3" placeholder='Enter your phone number here'/>
+                                    <input type="text" id="form1" class="form-control my-3" placeholder='Enter your phone number here' name="Phone"/>
                                     </div>
                                 </div>
 
@@ -199,13 +199,24 @@
 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript">
         let grid, dialog;
         // let phones = [{valid:true,number:'123', id:''}]; 
         // let certificates = [{valid:true,description:'something', name:'', id:''}];
         let phones = []; 
         let certificates = [];
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        function isValidAge(age) {
+            return !isNaN(parseInt(age, 10));
+        }
+        function isValidPhoneNumber(phoneNumber) {
+            const phoneRegex = /^0\d{9}$/;
+            return phoneRegex.test(phoneNumber);
+        }
         function Edit(e) {
             $('#ID').val(e.data.record.ID);
             $('#Name').val(e.data.record.Name);
@@ -232,7 +243,6 @@
                 data: { resume_id: e.data.record.ID },
                 success: function (response) {
                     certificates = JSON.parse(response);
-                    console.log(certificates)
                     renderCertificates();
                 }
             });
@@ -252,11 +262,46 @@
             };
             record.phones = phones; 
             record.certificates = certificates; 
-            console.log(record)
+            if (!record.Name) {
+                alert('Name cannot be empty. Please enter a name.');
+                return; 
+            }
+            if (!record.Age) {
+                alert('Age cannot be empty.');
+                return; 
+            }
+            if (!isValidAge(age)){
+                alert('Invalid age. Please enter a valid number for age.');
+                return;
+            }
+            if (!record.Email) {
+                alert('Email cannot be empty.');
+                return; 
+            }
+            if (!isValidEmail(record.Email)){
+                alert('Invalid email address. Please enter a valid email.');
+                return;
+            }
+            if (!record.Description) {
+                alert('Description cannot be empty.');
+                return; 
+            }
+            if (!record.Skills) {
+                alert('Skills cannot be empty.');
+                return; 
+            }
+            if (!record.Experience) {
+                alert('Experience cannot be empty.');
+                return; 
+            }
+            if (!record.Address) {
+                alert('Address cannot be empty.');
+                return; 
+            }
             $.ajax({ url: 'upsert.php', data: { record: record }, method: 'POST' })
                 .done(function (response) {
-                    // console.log(JSON.parse(response));
-                    console.log(response);
+                    phones = []; 
+                    certificates = []; 
                     dialog.close();
                     grid.reload();
                 })
@@ -267,7 +312,6 @@
         }
         function Delete(e) {
             if (confirm('Are you sure?')) {
-                console.log(e.data.id)
                 $.ajax({ url: 'delete.php', data: { id: e.data.id }, method: 'POST' })
                     .done(function (res) {
                         grid.reload();
@@ -310,7 +354,6 @@
         }
         function DeletePhone(index) {
             phones[index].valid = false;
-            console.log(phones)
             renderPhones();
         }
 
@@ -365,10 +408,12 @@
             $('#save1').on('click', function (e) {
                 e.preventDefault(); 
                 const phone = $('#form1').val();
+                if (!isValidPhoneNumber(phoneNumber)){
+                    alert('Invalid phone number. Please enter a valid 10-digit number starting with 0.');
+                    return;
+                }
                 phones.push({valid:true,number:phone, id:''});
-                console.log(phones)
                 renderPhones();
-                // console.log(phones)
             });
             $('#save2').on('click', function (e) {
                 e.preventDefault();
@@ -377,8 +422,72 @@
                 certificates.push({valid:true,description:desc, name:name, id:''});
                 renderCertificates();
             });
-            
+            $("#phone-form").validate({
+                rules: {
+                    form1: {
+                        number: true
+                    }
+                },
+                messages:{
+                    number: 'Please enter the valid phone number'
+                }
+            });
+            $("#form-cv").validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        minlength: 2
+                    },
+                    Age: {
+                        required: true,
+                        number: true
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Address: {
+                        required: true
+                    },
+                    Skills: {
+                        required: true
+                    },
+                    Experience: {
+                        required: true
+                    },
+                    About: {
+                        required: true
+                    },
+                },
+                messages: {
+                    Name: {
+                            required: 'This field is required'
+                            
+                    },
+                    Age: {
+                        required: 'This field is required',
+                        number: 'Age must be a number'
+                    },
+                    Email: {
+                        required: 'This field is required',
+                        email: 'Please enter a valid email format'
+                    },
+                    Address: {
+                        required: 'This field is required'
+                    },
+                    Skills: {
+                        required: 'This field is required'
+                    },
+                    Experience: {
+                        required: 'This field is required'
+                    },
+                    About: {
+                        required: 'This field is required'
+                    },
+                },
+            });
         });
+        
     </script>
 
 </body>
