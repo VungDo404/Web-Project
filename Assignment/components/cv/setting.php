@@ -270,11 +270,12 @@
                 alert('Age cannot be empty.');
                 return; 
             }
-            if (!isValidAge(age)){
+            if (!isValidAge(record.Age)){
                 alert('Invalid age. Please enter a valid number for age.');
                 return;
             }
             if (!record.Email) {
+                console.log(record.Email)
                 alert('Email cannot be empty.');
                 return; 
             }
@@ -408,7 +409,7 @@
             $('#save1').on('click', function (e) {
                 e.preventDefault(); 
                 const phone = $('#form1').val();
-                if (!isValidPhoneNumber(phoneNumber)){
+                if (!isValidPhoneNumber(phone)){
                     alert('Invalid phone number. Please enter a valid 10-digit number starting with 0.');
                     return;
                 }
