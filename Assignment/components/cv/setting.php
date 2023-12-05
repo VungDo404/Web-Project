@@ -8,6 +8,9 @@
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <style>
     #dialog{
@@ -27,7 +30,6 @@
             <div class="col-9">
                 <form class="form-inline">
                     <input id="txtName" type="text" placeholder="Name..." class="form-control mb-2 mr-sm-2 mb-sm-0" />
-                    <input id="txtCreatedDate" type="text" placeholder="..." class="form-control mb-2 mr-sm-2 mb-sm-0" />
                     
                     <button id="btnSearch" type="button" class="btn btn-default">Search</button> &nbsp;
                     <button id="btnClear" type="button" class="btn btn-default">Clear</button>
@@ -109,18 +111,20 @@
             <button type="button" id="btnSave" class="btn btn-default">Save</button>
             <button type="button" id="btnCancel" class="btn btn-default">Cancel</button>
         </form>
-        <div class="modal fade" id="modal-phone" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+        <div class="modal fade" id="modal-phone" role="dialog"  data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                <section style="background-color: #eee;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Phone</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                     <div class="container ">
                         <div class="row d-flex justify-content-center align-items-center ">
                         <div class="col">
                             <div class="card rounded-3">
                             <div class="card-body p-4">
-
-                                <h4 class="text-center my-3 pb-3">Phone number</h4>
-
                                 <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2" id='phone-form' >
                                 <div class="col-12">
                                     <div class="form-outline">
@@ -129,7 +133,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary" id='save1'>Save</button>
+                                    <button type="submit" class="btn btn-primary" id='save1'>Add</button>
                                 </div>
                                 </form>
 
@@ -149,20 +153,24 @@
                         </div>
                         </div>
                     </div>
-                </section>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-certificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div class="modal fade" id="modal-certificate" role="dialog" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
-                <section style="background-color: #eee;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Certificate</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                     <div class="container ">
                         <div class="row d-flex justify-content-center align-items-center ">
                         <div class="col">
                             <div class="card rounded-3">
                             <div class="card-body p-4">
-                                <h4 class="text-center my-3 pb-3">Certificate</h4>
                                 <form class="row row-cols-lg-auto g-3 justify-content-center align-items-center mb-4 pb-2">
                                 <div class="col-12">
                                     <div class="form-outline">
@@ -172,11 +180,11 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="btn btn-primary" id='save2'>Save</button>
+                                    <button class="btn btn-primary" id='save2'>Add</button>
                                 </div>
                                 </form>
 
-                                <table class="table mb-4">
+                                <table class="table mb-4 accordion table2">
                                 <thead>
                                     <tr>
                                     <th scope="col">Name</th>
@@ -191,15 +199,12 @@
                         </div>
                         </div>
                     </div>
-                </section>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script type="text/javascript">
         let grid, dialog;
         // let phones = [{valid:true,number:'123', id:''}]; 
@@ -262,6 +267,7 @@
             };
             record.phones = phones; 
             record.certificates = certificates; 
+            
             if (!record.Name) {
                 alert('Name cannot be empty. Please enter a name.');
                 return; 
@@ -275,7 +281,6 @@
                 return;
             }
             if (!record.Email) {
-                console.log(record.Email)
                 alert('Email cannot be empty.');
                 return; 
             }
@@ -345,10 +350,12 @@
         function renderCertificates() {
             $('#form2').val('');
             $('#Cert').val('');
+            // let certificates = [{valid:true,description:'something', name:'', id:''}];
             let html = '';
             certificates.forEach(function (certificate, index) {
                 if (certificate.valid) {
                     html += `<tr><td>${certificate.name}</td><td><button type="button" class="btn btn-danger" onclick="DeleteCertificate(${index})">Delete</button></td></tr>`;
+                    
                 }
             });
             $('#certificate-body').html(html);
@@ -362,6 +369,12 @@
             certificates[index].valid = false;
             renderCertificates();
         }
+        $('#modal-phone').on('show.bs.modal', function (e) {
+            renderPhones();
+        })
+        $('#modal-certificate').on('show.bs.modal', function (e) {
+            renderCertificates();
+        })
         $(document).ready(function () {
             grid = $('#grid').grid({
                 primaryKey: 'ID',
@@ -391,6 +404,8 @@
                 $('#Skills').val('');
                 $('#Experience').val('');
                 $('#Address').val('');
+                phones = []; 
+                certificates = [];
                 dialog.open('Add Resume');
             });
             $('#btnSave').on('click', Save);
@@ -400,11 +415,11 @@
                 dialog.close();
             });
             $('#btnSearch').on('click', function () {
-                grid.reload({ name: $('#txtName').val(), CreatedDate: $('#txtCreatedDate').val() });
+                grid.reload({ Name: $('#txtName').val() });
             });
             $('#btnClear').on('click', function () {
                 $('#txtName').val('');
-                grid.reload({ name: '', Age: '', Email:'',  });
+                grid.reload({ Name: '' });
             });
             $('#save1').on('click', function (e) {
                 e.preventDefault(); 
