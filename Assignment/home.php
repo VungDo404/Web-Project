@@ -167,71 +167,28 @@
 
     <?php include_once "./components/Footer.php" ?>
     <script>
-    const displayJobs = async () => {
-        display = document.getElementById('displayJobs');
-        const jobs = {
-            "jobs": [{
-                    "id": 1,
-                    "name": "Consultants",
-                    "company": "Orange",
-                    "salary": "9.5-14 million",
-                    "location": "District 2, Hmillion Minh",
-                    "img": "./img/Jobs/24h.webp"
-                },
-                {
-                    "id": 2,
-                    "name": "Car employee",
-                    "company": "Vietnam Automobile Company Limited",
-                    "salary": "10-15 million",
-                    "location": "District 10, Ho Chi Minh",
-                    "img": "./img/Jobs/alma.webp"
-                },
-                {
-                    "id": 3,
-                    "name": "Clerk",
-                    "company": "Green Moving Company Limited",
-                    "salary": "15-20 million",
-                    "location": "District 12, Ho Chi Minh",
-                    "img": "./img/Jobs/HD.webp"
-                },
-                {
-                    "id": 4,
-                    "name": "Nutrition consultant",
-                    "company": "Genma Company Limited",
-                    "salary": "5-8 million",
-                    "location": "Ha Noi",
-                    "img": "./img/Jobs/Lubu.webp"
-                },
-                {
-                    "id": 5,
-                    "name": "Sales agent",
-                    "company": "Tan Dat Stainless Steel Company Limited",
-                    "salary": "7-10 million",
-                    "location": "Nha Trang",
-                    "img": "./img/Jobs/new.webp"
-                },
-                {
-                    "id": 6,
-                    "name": "Sales consulting team leader",
-                    "company": "Paradise Travel Company Limited",
-                    "salary": "30-35 million",
-                    "location": "Ben Tre",
-                    "img": "./img/Jobs/HIWIN.webp"
-                }
-            ]
-        }
+    const apiEndpoint = 'http://localhost:8888/BigAssignment/Web-Project/Assignment/get_jobs.php';
+    const display = document.getElementById('displayJobs');
 
+    const getJobs = async () => {
+        const response = await fetch(apiEndpoint);
+        const songs = await response.json();
+        return songs;
+    };
+
+    const displayJobs = async () => {
+        const jobs = await getJobs();
         let output = '';
-        jobs.jobs.forEach((job) => {
+        jobs.forEach((job) => {
             output += `
-            <div id=${job.id} class="col-sm" style="min-width: 500px;">
+                <div id=${job.job_id} class="col-sm" style="min-width: 500px;">
                     <div class="jobCard border p-4">
-                        <div class="mb-2 fw-bold">${job.name}</div>
+                        <div class="mb-2 fw-bold">${job.job_name}</div>
                         <div class="d-flex flex-row rounded">
-                            <img src="${job.img}" alt="..."
+                            <img src="${job.image}" alt="${job.job_name}"
                                 style="height: 80px; object-fit: scale-down;">
                             <div>
-                                <div>${job.company}</div>
+                                <div>${job.company_name}</div>
                                 <div><span><i class="bi bi-cash"></i></span>&nbsp;${job.salary}</div>
                                 <div><span><i class="bi bi-geo-alt"></i></i></span>&nbsp;${job.location}</div>
                             </div>
@@ -245,6 +202,8 @@
 
     displayJobs();
     </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
