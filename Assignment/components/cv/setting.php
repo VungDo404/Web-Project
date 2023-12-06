@@ -397,6 +397,7 @@
                 resizable: true
             });
             $('#btnAdd').on('click', function () {
+                $('#ID').val('');
                 $('#Name').val('');
                 $('#Age').val('');
                 $('#Email').val('');
@@ -413,6 +414,7 @@
                 phones = []; 
                 certificates = []; 
                 dialog.close();
+                
             });
             $('#btnSearch').on('click', function () {
                 grid.reload({ Name: $('#txtName').val() });
