@@ -85,4 +85,9 @@
         }
 
         mysqli_close($conn);
+
+
+
+        // insert data
+        //include_once("../Assignment/components/job/insert_job.php");
     ?>

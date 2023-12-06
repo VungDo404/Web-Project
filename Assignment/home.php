@@ -167,7 +167,7 @@
 
     <?php include_once "./components/Footer.php" ?>
     <script>
-    const apiEndpoint = 'http://localhost:8888/BigAssignment/Web-Project/Assignment/get_jobs.php';
+    const apiEndpoint = 'http://localhost:8888/BigAssignment/Web-Project/Assignment/components/job/get_jobs.php';
     const display = document.getElementById('displayJobs');
 
     const getJobs = async () => {
@@ -187,7 +187,7 @@
                         <div class="d-flex flex-row rounded">
                             <img src="${job.image}" alt="${job.job_name}"
                                 style="height: 80px; object-fit: scale-down;">
-                            <div>
+                            <div style="margin-left: 10px;">
                                 <div>${job.company_name}</div>
                                 <div><span><i class="bi bi-cash"></i></span>&nbsp;${job.salary}</div>
                                 <div><span><i class="bi bi-geo-alt"></i></i></span>&nbsp;${job.location}</div>
