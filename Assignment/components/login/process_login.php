@@ -2,7 +2,7 @@
     
     $servername = "localhost";
     $username = "root";
-    $password = "";
+    $password = "Victor231!?";
     $databasename = 'MyResume';
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $databasename);
@@ -26,7 +26,7 @@
         if(password_verify($password, $hashed_password) == 1){
             setcookie("user_id", $user_id, time() + 86400, '/Assignment');
             $_SESSION["user_id"] = $user_id;
-            header("Location: http://localhost/Assignment/components/cv/setting.php");
+            header("Location: http://localhost/Assignment/home.php");
         }
         $_SESSION["email"] = $email;
         echo '<script type ="text/JavaScript"> alert("Incorrect email "); window.location.href = "http://localhost/Assignment/components/login/login_page.php"; </script>' ;
