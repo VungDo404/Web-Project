@@ -17,10 +17,10 @@
             reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )";
         mysqli_query($conn, $users);
-        $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (email,`password`, user_level)
-        VALUES ('user@gmail.com', '$hashed_password', 'USER');";
-        mysqli_query($conn, $sql);
+        // $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
+        // $sql = "INSERT INTO users (email,`password`, user_level)
+        // VALUES ('user@gmail.com', '$hashed_password', 'USER');";
+        // mysqli_query($conn, $sql);
         //////////////
         $resumes = "CREATE TABLE IF NOT EXISTS resumes (
             resume_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

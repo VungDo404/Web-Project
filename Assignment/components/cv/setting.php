@@ -25,7 +25,6 @@
     }
 </style>
 <body>
-    
     <?php
         if(!isset($_COOKIE["user_id"])){
             header("Location: http://localhost/Assignment/components/login/login_page.php");
@@ -87,7 +86,7 @@
                 <legend class="col-form-label col-sm-2 pt-0 mr-1">Gender</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" name="flexRadioDefault" type="radio" value="male" checked>
+                        <input name="flexRadioDefault" class="form-check-input" type="radio" value="male" checked>
                         <label class="form-check-label">
                             Male
                         </label>
@@ -308,7 +307,9 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
+            
         </div>
     </div>
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -363,28 +364,6 @@
             <div class="section">
                 <div class="section__title">Education</div>
                 <div class="section__list education">
-                    <div class="section__list-item">
-                    <div class="left">
-                        <div class="name">Sample Institute of technology</div>
-                        <div class="addr">San Fr, CA</div>
-                        <div class="duration">Jan 2011 - Feb 2015</div>
-                    </div>
-                    <div class="right">
-                        <div class="name">Fr developer</div>
-                        <div class="desc">did This and that</div>
-                    </div>
-                    </div>
-                    <div class="section__list-item">
-                    <div class="left">
-                        <div class="name">Akount</div>
-                        <div class="addr">San Monica, CA</div>
-                        <div class="duration">Jan 2011 - Feb 2015</div>
-                    </div>
-                    <div class="right">
-                        <div class="name">Fr developer</div>
-                        <div class="desc">did This and that</div>
-                    </div>
-                    </div>
 
                 </div>
             </div>

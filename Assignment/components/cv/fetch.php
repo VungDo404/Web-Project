@@ -11,11 +11,11 @@
     $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
     $offset = ($page - 1) * $limit;
 
-    $totalRecordsQuery = "SELECT COUNT(*) as count FROM resumes";
+    $totalRecordsQuery = "SELECT COUNT(*) as count FROM resumes WHERE user_id='$user_id'";
     $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
     $totalRecords = mysqli_fetch_assoc($totalRecordsResult)['count'];
 
-    $sql = "SELECT * FROM resumes LIMIT $offset, $limit";
+    $sql = "SELECT * FROM resumes LIMIT $offset, $limit WHERE user_id='$user_id'";
     $result = mysqli_query($conn, $sql);
     $records = array(); 
     while ($row = $result->fetch_assoc()){

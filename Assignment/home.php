@@ -11,6 +11,9 @@
 </head>
 
 <body>
+<?php 
+    include_once ("db.php");
+?>
     <?php include_once "./components/NavBar.php" ?>
     <!-- Carousel -->
     <div id="carouselExampleInterval" class="carousel slide mt-5" data-bs-ride="carousel">
@@ -40,6 +43,7 @@
         </button>
     </div>
     <!-- End Carousel -->
+
     <!-- Feature job -->
     <div class="container my-2 p-3 rounded shadow">
         <h5 class="">Outstanding career</h5>
@@ -167,7 +171,7 @@
     <?php include_once "./components/Footer.php" ?>
     <script>
     const apiEndpoint = 'http://localhost/Assignment/components/job/get_jobs.php';
-    const display = document.getElementById('displayJobs');
+    
 
     const getJobs = async () => {
         const response = await fetch(apiEndpoint);
@@ -178,6 +182,7 @@
     const displayJobs = async () => {
         const jobs = await getJobs();
         let output = '';
+        const display = document.getElementById('displayJobs');
         jobs.forEach((job) => {
             output += `
             
@@ -197,6 +202,7 @@
                     </div>
                     </a>
                 </div>
+            
         `;
         });
         display.innerHTML = output;

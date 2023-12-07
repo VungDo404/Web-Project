@@ -1,10 +1,40 @@
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$databasename = 'MyResume';
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $databasename);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the form is submitted via POST method
+
+    // Retrieve form data
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = password_hash(mysqli_real_escape_string($conn, $_POST['pass']), PASSWORD_DEFAULT); // Hash the password for security
+
+    // Your SQL INSERT query
+    $insertQuery = "INSERT INTO users (email, `password`, user_level) VALUES ('$email', '$password', 'USER')";
+
+    // Execute the query
+    if (mysqli_query($conn, $insertQuery)) {
+        header("Location: http://localhost/Assignment/components/login/login_page.php");
+    } else {
+        echo "Error: " . $insertQuery . "<br>" . mysqli_error($conn);
+    }
+}
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Form by Colorlib</title>
+    <title>Sign Up Form</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -37,7 +67,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
+                                <input type="password" name="re_pass" sid="re_pass" placeholder="Repeat your password"/>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
