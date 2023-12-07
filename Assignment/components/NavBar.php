@@ -8,7 +8,7 @@
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="localhost/Assignment/home.php">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost/Assignment/components/cv/setting.php">Create CV</a>
