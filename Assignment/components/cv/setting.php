@@ -493,8 +493,9 @@
                 data: { resume_id: e.data.record.ID },
                 success: function (response) {
                     phones = JSON.parse(response);
+                    console.log(phones)
                     let phoneNumbers = ''; 
-                    for(phone in phones){
+                    for(phone of phones){
                         phoneNumbers += phone.number ; 
                     }
                     if(phoneNumbers !== ''){
@@ -581,7 +582,7 @@
                         <div class="section__list-item">
                             <div class="name">${project.name}</div>
                             <div class="text">${project.description} 
-                            <a href="/${project.url}">link</a>
+                            <a href="${project.url}">link</a>
                             </div>
                         </div>`;
                     });

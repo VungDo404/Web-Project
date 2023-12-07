@@ -40,7 +40,6 @@
         </button>
     </div>
     <!-- End Carousel -->
-
     <!-- Feature job -->
     <div class="container my-2 p-3 rounded shadow">
         <h5 class="">Outstanding career</h5>
