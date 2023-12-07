@@ -101,13 +101,29 @@
             company_name VARCHAR(50) NOT NULL,
             salary VARCHAR(20) NOT NULL,
             location VARCHAR(50) NOT NULL,
-            image VARCHAR(50) NOT NULL,
-            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            image VARCHAR(255) NOT NULL,
+            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,#the reg_date is deadline date
+            job_description VARCHAR(500) NOT NULL,
+            company_address VARCHAR (70) NOT NULL
         )";
         if (mysqli_query($conn, $jobs)) {
-
+            
         } else {
             echo "Error creating table: " . mysqli_error($conn);
         }
+        ///////////JOB-CV TABLE////////
+        $job_CV = "CREATE TABLE IF NOT EXISTS job_cv(
+            job_cv_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            job_id INT UNSIGNED,
+            FOREIGN KEY (job_id) REFERENCES jobs(job_id),
+            user_id INT UNSIGNED,
+            FOREIGN KEY (user_id) REFERENCES users(user_id)
+        )";
+        if (mysqli_query($conn, $job_CV)) {
+        }
+        else {
+            echo "Error creating". mysqli_error($conn);
+        }
         mysqli_close($conn);
+        include_once("../Assignment/components/job/insert_job.php");
     ?>

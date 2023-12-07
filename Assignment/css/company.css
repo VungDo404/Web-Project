@@ -1,0 +1,24 @@
+.job_detail {
+    display: flex;
+    align-items: flex-start;
+    background-color: #FFFFFF;
+}
+
+  /* Style for the navigation items */
+.job_description {
+    text-align: center;
+    padding: 20px;
+    border-top: 3px solid transparent; /* Add transparent top border */
+    background-color: rgb(243, 240, 240);
+}
+
+  /* Style for the active item */
+.job_description.active {
+    border-color: #007bff;
+    color:#007bff; /* Add color to the top border */
+    background-color: white;
+}
+.job_description.left {
+    text-align: left;
+    background-color: white;
+}
