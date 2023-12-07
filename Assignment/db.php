@@ -1,7 +1,7 @@
 <?php
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "Victor231!?";
         $databasename = 'MyResume';
         // Create connection
         $connection = new mysqli($servername, $username, $password);
@@ -109,5 +109,27 @@
         } else {
             echo "Error creating table: " . mysqli_error($conn);
         }
+
+        // create table job
+        $jobs = "CREATE TABLE IF NOT EXISTS jobs (
+            job_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            job_name VARCHAR(50) NOT NULL,
+            company_name VARCHAR(50) NOT NULL,
+            salary VARCHAR(20) NOT NULL,
+            location VARCHAR(50) NOT NULL,
+            image VARCHAR(50) NOT NULL,
+            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )";
+        if (mysqli_query($conn, $jobs)) {
+            
+        } else {
+            echo "Error creating table: " . mysqli_error($conn);
+        }
+
         mysqli_close($conn);
+
+
+
+        // insert data
+        //include_once("../Assignment/components/job/insert_job.php");
     ?>

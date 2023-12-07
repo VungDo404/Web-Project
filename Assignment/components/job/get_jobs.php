@@ -1,7 +1,11 @@
 <?php 
     $servername = "localhost";
     $username = "root";
+<<<<<<< HEAD
     $password = "";
+=======
+    $password = "Victor231!?";
+>>>>>>> 9d232f0aec08c7a44e9d11f0d36de6e0486b59de
     $databasename = 'MyResume';
 
     // Create connection
