@@ -15,7 +15,7 @@
     $totalRecordsResult = mysqli_query($conn, $totalRecordsQuery);
     $totalRecords = mysqli_fetch_assoc($totalRecordsResult)['count'];
 
-    $sql = "SELECT * FROM resumes LIMIT $offset, $limit WHERE user_id='$user_id'";
+    $sql = "SELECT * FROM resumes WHERE user_id='$user_id' LIMIT $offset, $limit ";
     $result = mysqli_query($conn, $sql);
     $records = array(); 
     while ($row = $result->fetch_assoc()){
