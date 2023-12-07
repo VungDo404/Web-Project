@@ -2,7 +2,7 @@
 
     $servername = "localhost";
     $username = "root";
-    $password = "Victor231!?";
+    $password = "";
     $databasename = 'MyResume';
 
     // Create a connection

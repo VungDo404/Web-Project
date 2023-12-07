@@ -167,7 +167,7 @@
 
     <?php include_once "./components/Footer.php" ?>
     <script>
-    const apiEndpoint = 'http://localhost:8888/BigAssignment/Web-Project/Assignment/components/job/get_jobs.php';
+    const apiEndpoint = 'http://localhost/Assignment/components/job/get_jobs.php';
     const display = document.getElementById('displayJobs');
 
     const getJobs = async () => {
