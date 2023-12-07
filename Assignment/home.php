@@ -180,8 +180,9 @@
         let output = '';
         jobs.forEach((job) => {
             output += `
-            <a href="http://localhost/Assignment/components/company/company.php?job_id='${job.job_id}'", style="text-decoration: none; color: inherit";>
+            
                 <div id=${job.job_id} class="col-sm" style="min-width: 500px;">
+                <a href="http://localhost/Assignment/components/company/company.php?job_id='${job.job_id}'", style="text-decoration: none; color: inherit";>
                     <div class="jobCard border p-4">
                         <div class="mb-2 fw-bold">${job.job_name}</div>
                         <div class="d-flex flex-row rounded">
@@ -194,8 +195,8 @@
                             </div>
                         </div>
                     </div>
+                    </a>
                 </div>
-            </a>
         `;
         });
         display.innerHTML = output;
