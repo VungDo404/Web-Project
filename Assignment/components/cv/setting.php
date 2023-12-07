@@ -20,14 +20,19 @@
         max-height: 100%;
         overflow: auto;
     }
+    .main{
+        margin-top: 100px;
+    }
 </style>
 <body>
+    
     <?php
         if(!isset($_COOKIE["user_id"])){
             header("Location: http://localhost/Assignment/components/login/login_page.php");
         }
     ?>
-    <div class="container-fluid">
+    <?php include_once "../NavBar.php" ?>
+    <div class="container-fluid main">
         <div class="row">
             <div class="col-9">
                 <form class="form-inline">
