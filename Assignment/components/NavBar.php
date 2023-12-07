@@ -16,7 +16,7 @@
             </ul>
             <div class="d-inline my-2 my-lg-0">
                 <?php 
-                    if(isset($_SESSION["user_id"])){
+                    if(isset($_COOKIE["user_id"])){
                         echo '<a class="btn btn-outline-primary me-2" href="http://localhost/Assignment/components/logout/logout.php">Log out</a>';
                     }else{
                         echo '<a class="btn btn-outline-primary me-2" href="http://localhost/Assignment/components/login/login_page.php">Log in</a>';

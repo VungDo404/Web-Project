@@ -1,7 +1,7 @@
 <?php
         $servername = "localhost";
         $username = "root";
-        $password = "Victor231!?";
+        $password = "";
         $databasename = 'MyResume';
         // Create connection
         $connection = new mysqli($servername, $username, $password);
@@ -109,11 +109,5 @@
         } else {
             echo "Error creating table: " . mysqli_error($conn);
         }
-
         mysqli_close($conn);
-
-
-
-        // insert data
-        //include_once("../Assignment/components/job/insert_job.php");
     ?>
