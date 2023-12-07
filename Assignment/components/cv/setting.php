@@ -87,13 +87,13 @@
                 <legend class="col-form-label col-sm-2 pt-0 mr-1">Gender</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="male" checked>
+                        <input class="form-check-input" name="flexRadioDefault" type="radio" value="male" checked>
                         <label class="form-check-label">
                             Male
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="female">
+                        <input name="flexRadioDefault" class="form-check-input" type="radio" value="female">
                         <label class="form-check-label">
                             Female
                         </label>
