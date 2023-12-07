@@ -17,14 +17,15 @@
             reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )";
         mysqli_query($conn, $users);
-        // $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
-        // $sql = "INSERT INTO users (email,`password`, user_level)
-        // VALUES ('user@gmail.com', '$hashed_password', 'USER');";
-        // mysqli_query($conn, $sql);
+        $hashed_password = password_hash('123456', PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (email,`password`, user_level)
+        VALUES ('user@gmail.com', '$hashed_password', 'USER');";
+        mysqli_query($conn, $sql);
         //////////////
         $resumes = "CREATE TABLE IF NOT EXISTS resumes (
             resume_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(50) NOT NULL,
+            first_name VARCHAR(50) NOT NULL,
+            last_name VARCHAR(50) NOT NULL,
             age INT,
             gender VARCHAR(10),
             address VARCHAR(100),
@@ -32,7 +33,6 @@
             user_id INT(6) UNSIGNED,
             description TEXT,
             skills TEXT,
-            experience VARCHAR(100),
             FOREIGN KEY (user_id) REFERENCES users(user_id),
             reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )";
@@ -57,13 +57,55 @@
         $degrees = "CREATE TABLE IF NOT EXISTS degrees (
             degree_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(50) NOT NULL,
-            description VARCHAR(10) NOT NULL,
+            description VARCHAR(100) NOT NULL,
             resume_id INT UNSIGNED,
             FOREIGN KEY (resume_id) REFERENCES resumes(resume_id),
             reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )";
         if (mysqli_query($conn, $degrees)) {
             
+        } else {
+            echo "Error creating table: " . mysqli_error($conn);
+        }
+        $projects = "CREATE TABLE IF NOT EXISTS projects (
+            project_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(50) NOT NULL,
+            url VARCHAR(500) NOT NULL,
+            description VARCHAR(100) NOT NULL,
+            resume_id INT UNSIGNED,
+            FOREIGN KEY (resume_id) REFERENCES resumes(resume_id),
+            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )";
+        if (mysqli_query($conn, $projects)) {
+            
+        } else {
+            echo "Error creating table: " . mysqli_error($conn);
+        }
+        $experience = "CREATE TABLE IF NOT EXISTS experience (
+            experience_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(50) NOT NULL,
+            address VARCHAR(500) NOT NULL,
+            description VARCHAR(100) NOT NULL,
+            resume_id INT UNSIGNED,
+            FOREIGN KEY (resume_id) REFERENCES resumes(resume_id),
+            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )";
+        if (mysqli_query($conn, $experience)) {
+            
+        } else {
+            echo "Error creating table: " . mysqli_error($conn);
+        }
+        $jobs = "CREATE TABLE IF NOT EXISTS jobs (
+            job_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            job_name VARCHAR(50) NOT NULL,
+            company_name VARCHAR(50) NOT NULL,
+            salary VARCHAR(20) NOT NULL,
+            location VARCHAR(50) NOT NULL,
+            image VARCHAR(50) NOT NULL,
+            reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )";
+        if (mysqli_query($conn, $jobs)) {
+
         } else {
             echo "Error creating table: " . mysqli_error($conn);
         }

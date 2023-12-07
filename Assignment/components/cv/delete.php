@@ -17,8 +17,10 @@
         // Perform the deletion queries
         $sql_phones = "DELETE FROM phones WHERE resume_id=$resume_id";
         $sql_degrees = "DELETE FROM degrees WHERE resume_id=$resume_id";
+        $sql_projects = "DELETE FROM projects WHERE resume_id=$resume_id";
+        $sql_experience = "DELETE FROM experience WHERE resume_id=$resume_id";
         $sql_resumes = "DELETE FROM resumes WHERE resume_id=$resume_id";
-
+        
         mysqli_query($conn, $sql_phones);
         mysqli_query($conn, $sql_degrees);
         mysqli_query($conn, $sql_resumes);

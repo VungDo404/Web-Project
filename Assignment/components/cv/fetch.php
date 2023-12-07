@@ -21,14 +21,14 @@
     while ($row = $result->fetch_assoc()){
         $records[] = array(
             'ID' => $row['resume_id'],
-            'Name' => $row['name'],
+            'firstName' => $row['first_name'],
+            'lastName' => $row['last_name'],
             'Age' => $row['age'],
             'Gender' => $row['gender'],
             'Address' => $row['address'],
             'Email' => $row['email'],
             'About' => $row['description'],
             'Skills' => $row['skills'],
-            'Experience' => $row['experience'],
             'CreatedDate' => $row['reg_date'],
         );
       }

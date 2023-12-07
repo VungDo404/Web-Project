@@ -13,7 +13,6 @@ $(function() {
         },
         password: {
             required: true,
-            
         }
         },
         messages: {

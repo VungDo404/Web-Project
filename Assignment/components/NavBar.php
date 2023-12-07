@@ -5,8 +5,8 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
@@ -14,6 +14,17 @@
                     <a class="nav-link" href="http://localhost/Assignment/components/cv/setting.php">Create CV</a>
                 </li>
             </ul>
+            <div class="d-inline my-2 my-lg-0">
+                <?php 
+                    if(isset($_SESSION["user_id"])){
+                        echo '<a class="btn btn-outline-primary me-2" href="http://localhost/Assignment/components/logout/logout.php">Log out</a>';
+                    }else{
+                        echo '<a class="btn btn-outline-primary me-2" href="http://localhost/Assignment/components/login/login_page.php">Log in</a>';
+                        echo '<a class="btn btn-primary" href="http://localhost/Assignment/components/register/register.php">Sign up</a>';
+                    }
+                ?>
+
+            </div>
         </div>
     </div>
 </nav>
